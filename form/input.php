@@ -15,6 +15,12 @@ if(!empty($_POST["btn_confirm"])){
 if(!empty($_POST["btn_submit"])){
   $pageFlag = 2;
 }
+
+//<script>alert('xssが必要です');</script>
+//XSS対策
+function h($str){
+  return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -30,11 +36,11 @@ if(!empty($_POST["btn_submit"])){
     <!-- <form action="input.php" method="GET"> -->
     <form action="input.php" method="POST">
       <label for="name">氏名</label><br>
-      <input type="text" name="name" value="<?php if(!empty($_POST['name'])){echo $_POST['name'];} ?>"><br>
+      <input type="text" name="name" value="<?php if(!empty($_POST['name'])){echo h($_POST['name']);} ?>"><br>
       <label for="email">メール</label><br>
-      <input type="text" name="email" value="<?php if(!empty($_POST['email'])){echo $_POST['email'];} ?>"><br>
+      <input type="text" name="email" value="<?php if(!empty($_POST['email'])){echo h($_POST['email']);} ?>"><br>
       <label for="contact">お問い合わせ</label><br>
-      <textarea name="contact" id="" cols="30" rows="10"><?php if(!empty($_POST['contact'])){echo $_POST['contact'];} ?></textarea><br>
+      <textarea name="contact" id="" cols="30" rows="10"><?php if(!empty($_POST['contact'])){echo h($_POST['contact']);} ?></textarea><br>
       <input type="submit" name="btn_confirm" value="確認">
     </form>
   <?php endif; ?>
@@ -42,11 +48,11 @@ if(!empty($_POST["btn_submit"])){
   <?php if($pageFlag === 1) :?>
     <h1>確認画面</h1>
     <p>氏名</p>
-    <?php echo $_POST['name']; ?>
+    <?php echo h($_POST['name']); ?>
     <p>メール</p>
-    <?php echo $_POST['email']; ?>
+    <?php echo h($_POST['email']); ?>
     <p>お問い合わせ</p>
-    <?php echo $_POST['contact']; ?>
+    <?php echo h($_POST['contact']); ?>
     <form action="input.php" method="POST">
       <input type="submit" name="back" value="戻る"><br>
       <input type="submit" name="btn_submit" value="送信">
