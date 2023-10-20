@@ -5,8 +5,15 @@
 //   echo '<pre>';var_dump($_GET);echo '</pre>';
 // }
 //POSTはURLに表示されない
-if(!empty($_POST['name'])){
-  echo '<pre>';var_dump($_POST);echo '</pre>';
+// if(!empty($_POST['name'])){
+//   echo '<pre>';var_dump($_POST);echo '</pre>';
+// }
+$pageFlag = 0;
+if(!empty($_POST["btn_confirm"])){
+  $pageFlag = 1;
+}
+if(!empty($_POST["btn_submit"])){
+  $pageFlag = 2;
 }
 ?>
 <!DOCTYPE html>
@@ -17,20 +24,40 @@ if(!empty($_POST['name'])){
   <title>お問い合わせフォーム</title>
 </head>
 <body>
-  <!-- <form action="input.php" method="GET"> -->
-  <form action="input.php" method="POST">
-    <label for="name">氏名</label><br>
-    <input type="text" name="name"><br>
-    <label for="mail">メール</label><br>
-    <input type="text" name="mail"><br>
-    <label for="sports">スポーツ</label><br>
-    <input type="checkbox" name="sports[]" value="野球">野球
-    <input type="checkbox" name="sports[]" value="サッカー">サッカー
-    <input type="checkbox" name="sports[]" value="バスケ">バスケ
-    <br>
-    <label for="contact">お問い合わせ</label><br>
-    <textarea name="contact" id="" cols="30" rows="10"></textarea><br>
-    <input type="submit" value="送信">
-  </form>
+  <!-- 入力画面 -->
+  <?php if($pageFlag === 0)  : ?>
+    <h1>入力画面</h1>
+    <!-- <form action="input.php" method="GET"> -->
+    <form action="input.php" method="POST">
+      <label for="name">氏名</label><br>
+      <input type="text" name="name"><br>
+      <label for="email">メール</label><br>
+      <input type="text" name="email"><br>
+      <label for="contact">お問い合わせ</label><br>
+      <textarea name="contact" id="" cols="30" rows="10"></textarea><br>
+      <input type="submit" name="btn_confirm" value="確認">
+    </form>
+  <?php endif; ?>
+  <!-- 確認画面 -->
+  <?php if($pageFlag === 1) :?>
+    <h1>確認画面</h1>
+    <p>氏名</p>
+    <?php echo $_POST['name']; ?>
+    <p>メール</p>
+    <?php echo $_POST['email']; ?>
+    <p>お問い合わせ</p>
+    <?php echo $_POST['contact']; ?>
+    <form action="input.php" method="POST">
+      <input type="submit" name="btn_submit" value="送信">
+      <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
+      <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
+      <input type="hidden" name="contact" value="<?php echo $_POST['contact']; ?>">
+    </form>
+  <?php endif ;?>
+  <!-- 完了画面 -->
+  <?php if($pageFlag === 2) :?>
+    <h1>完了画面</h1>
+    送信完了
+  <?php endif ;?>
 </body>
 </html>
