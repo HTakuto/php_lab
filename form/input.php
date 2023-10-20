@@ -30,11 +30,11 @@ if(!empty($_POST["btn_submit"])){
     <!-- <form action="input.php" method="GET"> -->
     <form action="input.php" method="POST">
       <label for="name">氏名</label><br>
-      <input type="text" name="name"><br>
+      <input type="text" name="name" value="<?php if(!empty($_POST['name'])){echo $_POST['name'];} ?>"><br>
       <label for="email">メール</label><br>
-      <input type="text" name="email"><br>
+      <input type="text" name="email" value="<?php if(!empty($_POST['email'])){echo $_POST['email'];} ?>"><br>
       <label for="contact">お問い合わせ</label><br>
-      <textarea name="contact" id="" cols="30" rows="10"></textarea><br>
+      <textarea name="contact" id="" cols="30" rows="10"><?php if(!empty($_POST['contact'])){echo $_POST['contact'];} ?></textarea><br>
       <input type="submit" name="btn_confirm" value="確認">
     </form>
   <?php endif; ?>
@@ -48,6 +48,7 @@ if(!empty($_POST["btn_submit"])){
     <p>お問い合わせ</p>
     <?php echo $_POST['contact']; ?>
     <form action="input.php" method="POST">
+      <input type="submit" name="back" value="戻る"><br>
       <input type="submit" name="btn_submit" value="送信">
       <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
       <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
