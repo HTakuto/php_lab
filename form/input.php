@@ -93,12 +93,12 @@ function h($str){
           <label for="age">年齢</label>
           <select class="form-control" id="age" name="age">
             <option value="">選択してください</option>
-            <option value="1" <?php if(!isset($_POST['age']) && $_POST['age']=== '1'){echo 'selected';}?>>~19歳</option>
-            <option value="2"<?php if(!isset($_POST['age']) && $_POST['age']=== '2'){echo 'selected';}?>>20~29歳</option>
-            <option value="3"<?php if(!isset($_POST['age']) && $_POST['age']=== '3'){echo 'selected';}?>>30~39歳</option>
-            <option value="4"<?php if(!isset($_POST['age']) && $_POST['age']=== '4'){echo 'selected';}?>>40~49歳</option>
-            <option value="5"<?php if(!isset($_POST['age']) && $_POST['age']=== '5'){echo 'selected';}?>>50~59歳</option>
-            <option value="6"<?php if(!isset($_POST['age']) && $_POST['age']=== '6'){echo 'selected';}?>>60歳~</option>
+            <option value="1" <?php if(isset($_POST['age']) && $_POST['age'] === '1'){echo 'selected';}?>>~19歳</option>
+            <option value="2"<?php if(isset($_POST['age']) && $_POST['age']=== '2'){echo 'selected';}?>>20~29歳</option>
+            <option value="3"<?php if(isset($_POST['age']) && $_POST['age']=== '3'){echo 'selected';}?>>30~39歳</option>
+            <option value="4"<?php if(isset($_POST['age']) && $_POST['age']=== '4'){echo 'selected';}?>>40~49歳</option>
+            <option value="5"<?php if(isset($_POST['age']) && $_POST['age']=== '5'){echo 'selected';}?>>50~59歳</option>
+            <option value="6"<?php if(isset($_POST['age']) && $_POST['age']=== '6'){echo 'selected';}?>>60歳~</option>
           </select>
         </div>
         <div class="form-group">
@@ -159,6 +159,8 @@ function h($str){
   <!-- 完了画面 -->
   <?php if($pageFlag === 2) :?>
     <?php if($_SESSION['csrfToken'] === $_POST['csrf']) :?>
+      <?php require '../db/insert.php' ?>
+      <?php insertContact($_POST); ?>
       <h1>完了画面</h1>
       送信完了
       <?php unset($_SESSION['csrfToken']); ?>
