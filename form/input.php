@@ -1,4 +1,5 @@
 <?php
+header('X-FRAME-OPTIONS: DENY');
 //スーパーグローバル変数 9種類
 //GETはURLに表示される
 // if(!empty($_GET['name'])){
