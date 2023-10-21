@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);//強い型指定
 /*
 function test(仮引数){
   処理
@@ -54,3 +55,40 @@ function sumPrice($int, $int2){
 $total = sumPrice(1,2);
 
 echo $total;
+
+
+//関数のデフォルト値->nullも可能
+
+// function defaultName($name = '本田'){
+function defaultName($name = null){
+  echo '私の名字は' . $name . 'です。';
+}
+echo "<br>";
+defaultName();
+echo "<br>";
+defaultName('スズキ');
+
+
+//引数の型を指定(タイプピンティング)
+function typeText(string $str){
+  echo $str . 'はstringです。';
+}
+echo '<br>';
+typeText('この文字');
+//stringではないので下記はエラー
+// typeText(123);
+
+//戻り値の型指定と可変引数
+function combine(string ...$name): string
+{
+  $combinedName = '';
+  for($i=0;$i<count($name);$i++){
+    $combinedName .= $name[$i];
+    if($i != count($name) - 1){
+      $combinedName .= '.';
+    }
+  }
+  return $combinedName;
+}
+
+echo combine('本田', '香川', '長友');
