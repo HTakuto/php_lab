@@ -2,7 +2,8 @@
 session_start();
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: DENY');
-
+//バリデーション読み込み
+require('validation.php');
 //スーパーグローバル変数 9種類
 //GETはURLに表示される
 // if(!empty($_GET)){
@@ -16,8 +17,9 @@ header('X-FRAME-OPTIONS: DENY');
 //ページの切り替え
 //初期は入力画面
 $pageFlag = 0;
+$errors = validation($_POST);
 //確認画面
-if(!empty($_POST["btn_confirm"])){
+if(!empty($_POST["btn_confirm"]) && empty($errors)){
   $pageFlag = 1;
 }
 //完了画面
@@ -50,6 +52,15 @@ function h($str){
     $token = $_SESSION['csrfToken'];
   ?>
     <h1>入力画面</h1>
+    <?php if(!empty($errors) && !empty($_POST['btn_confirm'])):?>
+      <?php echo '<ul>' ;?>
+        <?php
+          foreach($errors as $error){
+            echo '<li>' . $error . '</li>';
+          }
+        ?>
+      <?php echo '</ul>' ;?>
+    <?php endif; ?>
     <!-- <form action="input.php" method="GET"> -->
     <form action="input.php" method="POST">
       <label for="name">氏名</label><br>
@@ -59,8 +70,8 @@ function h($str){
       <label for="url">ホームページ</label><br>
       <input type="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']);} ?>"><br>
       <label for="gender">性別</label><br>
-      <input type="radio" name="gender" value="0" <?php if(!isset($_POST['gender']) && $_POST['gender']=== '0'){echo 'checked';}?>>男性
-      <input type="radio" name="gender" value="1" <?php if(!isset($_POST['gender']) && $_POST['gender']=== '1'){echo 'checked';}?>>女性<br>
+      <input type="radio" name="gender" value="0" <?php if(isset($_POST['gender']) && $_POST['gender'] === '0'){echo 'checked';}?>>男性
+      <input type="radio" name="gender" value="1" <?php if(isset($_POST['gender']) && $_POST['gender'] === '1'){echo 'checked';}?>>女性<br>
       <label for="age">年齢</label><br>
       <select name="age">
         <option value="">選択してください</option>
