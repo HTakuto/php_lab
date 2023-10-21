@@ -2,13 +2,14 @@
 session_start();
 //クリックジャッキング対策
 header('X-FRAME-OPTIONS: DENY');
+
 //スーパーグローバル変数 9種類
 //GETはURLに表示される
-// if(!empty($_GET['name'])){
+// if(!empty($_GET)){
 //   echo '<pre>';var_dump($_GET);echo '</pre>';
 // }
 //POSTはURLに表示されない
-// if(!empty($_POST['name'])){
+// if(!empty($_POST)){
 //   echo '<pre>';var_dump($_POST);echo '</pre>';
 // }
 
@@ -55,8 +56,25 @@ function h($str){
       <input type="text" name="name" value="<?php if(!empty($_POST['name'])){echo h($_POST['name']);} ?>"><br>
       <label for="email">メール</label><br>
       <input type="text" name="email" value="<?php if(!empty($_POST['email'])){echo h($_POST['email']);} ?>"><br>
+      <label for="url">ホームページ</label><br>
+      <input type="url" name="url" value="<?php if(!empty($_POST['url'])){echo h($_POST['url']);} ?>"><br>
+      <label for="gender">性別</label><br>
+      <input type="radio" name="gender" value="0" <?php if(!isset($_POST['gender']) && $_POST['gender']=== '0'){echo 'checked';}?>>男性
+      <input type="radio" name="gender" value="1" <?php if(!isset($_POST['gender']) && $_POST['gender']=== '1'){echo 'checked';}?>>女性<br>
+      <label for="age">年齢</label><br>
+      <select name="age">
+        <option value="">選択してください</option>
+        <option value="1" <?php if(!isset($_POST['age']) && $_POST['age']=== '1'){echo 'selected';}?>>~19歳</option>
+        <option value="2"<?php if(!isset($_POST['age']) && $_POST['age']=== '2'){echo 'selected';}?>>20~29歳</option>
+        <option value="3"<?php if(!isset($_POST['age']) && $_POST['age']=== '3'){echo 'selected';}?>>30~39歳</option>
+        <option value="4"<?php if(!isset($_POST['age']) && $_POST['age']=== '4'){echo 'selected';}?>>40~49歳</option>
+        <option value="5"<?php if(!isset($_POST['age']) && $_POST['age']=== '5'){echo 'selected';}?>>50~59歳</option>
+        <option value="6"<?php if(!isset($_POST['age']) && $_POST['age']=== '6'){echo 'selected';}?>>60歳~</option>
+      </select>
+      <br>
       <label for="contact">お問い合わせ</label><br>
       <textarea name="contact" id="" cols="30" rows="10"><?php if(!empty($_POST['contact'])){echo h($_POST['contact']);} ?></textarea><br>
+      <input type="checkbox" name="caution" value="1">注意事項にチェックする<br>
       <input type="hidden" name="csrf" value="<?php echo h($token); ?>">
       <input type="submit" name="btn_confirm" value="確認">
     </form>
@@ -69,6 +87,22 @@ function h($str){
       <?php echo h($_POST['name']); ?>
       <p>メール</p>
       <?php echo h($_POST['email']); ?>
+      <p>ホームページ</p>
+      <?php echo h($_POST['url']); ?>
+      <p>性別</p>
+      <?php 
+        if($_POST['gender'] === '0'){echo '男性';} 
+        if($_POST['gender'] === '1'){echo '女性';} 
+      ?>
+      <p>年齢</p>
+      <?php 
+        if($_POST['age'] === '1'){echo '~19歳';} 
+        if($_POST['age'] === '2'){echo '20~29歳';} 
+        if($_POST['age'] === '3'){echo '30~39歳';} 
+        if($_POST['age'] === '4'){echo '40~49歳';} 
+        if($_POST['age'] === '5'){echo '50~59歳';} 
+        if($_POST['age'] === '6'){echo '60歳~';} 
+      ?>
       <p>お問い合わせ</p>
       <?php echo h($_POST['contact']); ?>
       <form action="input.php" method="POST">
@@ -76,7 +110,11 @@ function h($str){
         <input type="submit" name="btn_submit" value="送信">
         <input type="hidden" name="name" value="<?php echo h($_POST['name']); ?>">
         <input type="hidden" name="email" value="<?php echo h($_POST['email']); ?>">
+        <input type="hidden" name="url" value="<?php echo h($_POST['url']); ?>">
+        <input type="hidden" name="gender" value="<?php echo h($_POST['gender']); ?>">
+        <input type="hidden" name="age" value="<?php echo h($_POST['age']); ?>">
         <input type="hidden" name="contact" value="<?php echo h($_POST['contact']); ?>">
+        <input type="hidden" name="caution" value="<?php echo h($_POST['caution']); ?>">
         <input type="hidden" name="csrf" value="<?php echo h($_POST['csrf']); ?>">
       </form>
     <?php endif ;?>
