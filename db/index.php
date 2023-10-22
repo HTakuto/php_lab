@@ -6,7 +6,7 @@ require 'db_connection.php';
 // $sql = 'select * from contact_form where id = 2'; //sql文
 // $stmt = $pdo->query($sql); //sql実行
 
-//ユーザー入力有り prepare, bin, execute
+//ユーザー入力有り prepare, bind, execute
 $sql = 'select * from contact_form where id = :id'; //名前付きプレースホルダー
 // $stmt = $pdo->prepare($sql);//プリペアードステートメント
 // $stmt->bindValue('id', 2, PDO::PARAM_INT);// 紐づけ
