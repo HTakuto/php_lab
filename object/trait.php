@@ -1,7 +1,6 @@
 <?php
 // トレイト
 trait ProductTrait{
-
   public function getProduct(){
     echo 'プロダクト';
   }
